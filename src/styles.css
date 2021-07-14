@@ -1,0 +1,87 @@
+.btn,
+.jumbotron,
+.nav :hover {
+  border-radius: 0px;
+}
+.nav{
+  padding: 15px;
+  margin: 18px 20px;
+  border-radius: 28px;
+  box-shadow: 0 3px 3px rgba(151, 151, 151, 0.335);
+}
+body {
+  background-color: #ed4f4f;
+  font-family: 'Mulish', sans-serif;
+}
+footer {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+}
+.center{
+  position: absolute;
+  top: 50%;
+  text-align: center;
+  font-size: 65px;
+  text-shadow: 0 3px 3px rgba(0,0,0,0.2);
+  font-weight: 100;
+}
+.listTable{
+  border-radius: 20px;
+}
+.fontLight {
+  font-weight: 100;
+}
+.controlBtn{
+  background-color: #ed4f4f;
+  color: white;
+  border-radius: 30px;
+  margin: 0 10px;
+}
+.addUser{
+    background-color: white;
+    color: #ed4f4f;
+    font-weight: 100;
+    text-align:center;
+    position: absolute;
+    bottom:25px;
+    right: 18px;
+    display:block;
+    height: 68px;
+    width: 68px;
+    border-radius: 50%;
+    border:0px;
+    font-size: 35px;
+}
+.updateForm label {
+  margin-top: 19px;
+}
+.crtlbtn{
+  background-color: #ed4f4f;
+  color: white;
+  border-radius: 20px;
+}
+.card{
+  margin: 20px;
+  border-radius: 30px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.12), 
+              0 2px 2px rgba(0,0,0,0.12), 
+              0 4px 4px rgba(0,0,0,0.12), 
+              0 8px 8px rgba(0,0,0,0.12), 
+              0 16px 16px rgba(0,0,0,0.12), 
+              0 32px 32px rgba(0,0,0,0.12);
+}
+.card h1 {
+  font-size: 70px;
+  font-weight: 100;
+  color: #ed4f4f;
+}
+.card p {
+  font-weight: 400;
+  font-style: 16px;
+}
+.card a {
+  color: inherit;
+  text-decoration: none;
+}
