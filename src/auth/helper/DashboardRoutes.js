@@ -3,9 +3,9 @@ import { Route, Redirect } from "react-router-dom";
 import { isAutheticated } from "./index";
 import PermissionList from 'permission-list';
 
-const Permission = isAutheticated().user ? new PermissionList(isAutheticated().user.assignedPerm ) : new PermissionList(["view"])
 
 const DashboardRoutes = ({ component: Component, ...rest }) => {
+  const Permission = isAutheticated().user ? new PermissionList(isAutheticated().user.assignedPerm ) : new PermissionList(["view"])
   return (
     <Route
       {...rest}
