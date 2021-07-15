@@ -37,20 +37,20 @@ const Menu = ({ history }) => {
        )
       }
       {
-        Permission.checkAll(["view","user-list","user-edit"]) && (
+        Permission.checkAll(["view","user-edit"]) && (
           <li className="nav-item">
             <Link
               style={currentTab(history, "/user/edit")}
               className="nav-link"
               to="/user/edit"
             >
-              Edit Users {isAutheticated}
+              Edit Users 
             </Link>
           </li>
         )
       }
       {
-        Permission.checkAll(["view","user-list","dashboard"]) && (
+        Permission.checkAll(["view","dashboard"]) && (
           <li className="nav-item">
           <Link
             style={currentTab(history, "/admin/dash")}

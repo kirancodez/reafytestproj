@@ -85,3 +85,6 @@ footer {
   color: inherit;
   text-decoration: none;
 }
+.avoid-clicks {
+  pointer-events: none;
+}

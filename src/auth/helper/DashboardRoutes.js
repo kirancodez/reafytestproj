@@ -10,7 +10,7 @@ const DashboardRoutes = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={props =>
-        isAutheticated() && Permission.checkAll(["view","dashboard"]) ? (
+        isAutheticated() && Permission.checkAll(["view","dashboard", "user-edit"]) ? (
           <Component {...props} />
         ) : (
           <Redirect

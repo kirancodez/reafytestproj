@@ -358,11 +358,11 @@ const tables = () => (
             <table className="col-md-7 bg-white table text-center listTable">
                     <thead>
                         <tr>
-                        <th scope="col">Name {datas.length}</th>
+                        <th scope="col">Name </th>
                         <th scope="col">Email</th>
                         <th scope="col">Phone</th>
                         <th scope="col">Age</th>
-                        <th scope="col">controls</th>
+                        <th scope="col"className={(user.assignedPerm.includes("user-edit") ? "" : "d-none")}>controls</th>
                         </tr>
                     </thead>
                     {datas.map((item, index) => (
@@ -372,8 +372,8 @@ const tables = () => (
                             <td>{item.email}</td>
                             <td>{item.phoneNumber}</td>
                             <td>{item.age}</td>
-                            <td>
-                                <button className="btn controlBtn" data-id={item._id} onClick={onEditHandler}    >Edit</button>
+                            <td  className={(user.assignedPerm.includes("user-edit") ? "" : "d-none")}>
+                                <button  className="btn controlBtn" data-id={item._id} onClick={onEditHandler} > Edit</button>
                                 <button className="btn controlBtn" data-id={item._id}  onClick={deleteHandler}>Delete</button>
                                 <button className="btn controlBtn" data-id={item._id}  onClick={adminHandler} >Make Admin</button>
                             </td>
@@ -395,6 +395,7 @@ return(
         {loader ? <h1 className="text-white text-center fontLight">Loading ...</h1> 
           : datas < 1 ? <h1 className="text-white text-center fontLight pt-5 ">Oops! ...  there is no users so far ... !</h1>
           : tables()}
+          
         </Base>
     )
 

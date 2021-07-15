@@ -23,7 +23,7 @@ const Routes = () => {
         <Route path="/signin" exact component={Signin} />
         <UserListRoutes path="/user/list" exact component={UserList} />
         <UserEditRoutes path="/user/edit" exact component={UserEdit} />
-        <DashboardRoutes path="/user/dash" exact component={Dashboard} />
+        <UserEditRoutes path="/user/dash" exact component={Dashboard} />
         <DashboardRoutes path="/admin/list" exact component={AdminListing} />
       </Switch>
     </BrowserRouter>

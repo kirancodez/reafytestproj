@@ -37,8 +37,8 @@ const Dashboard = () => {
     const content = () => (
         <div className="container">
         <div className="row">
-            <Card style={{ width: "22rem" }}>
-                <Link to="/admin/list">
+            <Card style={{ width: "22rem" }} className={user.isAdmin ? "" : "avoid-clicks" }>
+                <Link to="/admin/list"  >
                 <Card.Body>
                     <h1>{admincount}</h1>
                     <p>Total Admins</p>
@@ -46,10 +46,15 @@ const Dashboard = () => {
                 </Link>
             </Card>
                 <Card style={{ width: "22rem" }}>
-                <Link to="/user/edit">
+            
+                <Link to= { 
+                    user.assignedPerm.includes("user-list") ? "/user/list"
+                    : user.assignedPerm.includes("user-edit") ? "/user/edit"
+                    : "/user/edit" }
+                  >
                     <Card.Body>
                         <h1>{usercounts}</h1>
-                        <p>Total Users</p>
+                        <p>Total Users  </p>
                     </Card.Body>
                 </Link>
                 </Card>
