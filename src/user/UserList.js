@@ -8,21 +8,25 @@ const UserList = () => {
     
   const { user, token } = isAutheticated();
   const [datas, setDatas] = useState([]);
+  const [loader, setLoader] = useState(false);
   
   useEffect(() => {
+      setLoader(true);
       getUsers(user._id, token).then(data => {
         if (data.error) {
+          setLoader(false);
           console.log(data.error);
         } else {
           setDatas(data);
+          setLoader(false);
         }
       });
     },[])
     
-    return(
-        <Base title={datas  ? "" : "All users"} description={datas ? "" : "This page shows all the users loged in to the system"}>
-          {datas < 1 ?  <h1 className="text-white text-center fontLight pt-5 ">Oops! ...  there is no users so far ... !</h1> :         
-          <div className="col-md-6 mx-auto mt-4">
+
+
+  const table = () => (
+    <div className="col-md-6 mx-auto mt-4">
             <table className="col-md-7 bg-white table text-center listTable">
                     <thead>
                         <tr>
@@ -44,10 +48,16 @@ const UserList = () => {
                     ))}
            
             </table>
-        </div>}
-
-
+        </div>
+  )
+    return(
+      <div>
+        <Base title={loader ? "" : "All Users"} description={loader ? "" : "List of all users in this application" } >
+          {loader ? <h1 className="text-white text-center fontLight">Loading ...</h1> 
+          : datas < 1 ? <h1 className="text-white text-center fontLight pt-5 ">Oops! ...  there is no users so far ... !</h1>
+          : table()}
         </Base>
+      </div>
     )
 }
 

@@ -13,6 +13,7 @@ const Dashboard = () => {
     
     const [admincount, setAdmincount] = useState("")
     const [usercounts, setUsercounts] = useState("")
+    const [loader, setLoader] = useState(false)
 
     useEffect(() => {
         adminlist(user._id, token ).then(data => {
@@ -33,30 +34,32 @@ const Dashboard = () => {
             }
         })
     },[])
-    
+    const content = () => (
+        <div className="container">
+        <div className="row">
+            <Card style={{ width: "22rem" }}>
+                <Link to="/admin/list">
+                <Card.Body>
+                    <h1>{admincount}</h1>
+                    <p>Total Admins</p>
+            </Card.Body>
+                </Link>
+            </Card>
+                <Card style={{ width: "22rem" }}>
+                <Link to="/user/edit">
+                    <Card.Body>
+                        <h1>{usercounts}</h1>
+                        <p>Total Users</p>
+                    </Card.Body>
+                </Link>
+                </Card>
+        </div>
+    </div>
+    )
     
     return(
         <Base>
-            <div className="container">
-                <div className="row">
-                    <Card style={{ width: "22rem" }}>
-                        <Link to="/admin/list">
-                        <Card.Body>
-                            <h1>{admincount}</h1>
-                            <p>Total Admins</p>
-                    </Card.Body>
-                        </Link>
-                    </Card>
-                        <Card style={{ width: "22rem" }}>
-                        <Link to="/user/edit">
-                            <Card.Body>
-                                <h1>{usercounts}</h1>
-                                <p>Total Users</p>
-                            </Card.Body>
-                        </Link>
-                        </Card>
-                </div>
-            </div>
+            {admincount && usercounts ? content() : <h1 className="text-white text-center fontLight">Loading ... </h1>}
         </Base>
     )
 }

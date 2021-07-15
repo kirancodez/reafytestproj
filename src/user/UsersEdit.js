@@ -12,6 +12,9 @@ const UserEdit = () => {
 const { user, token } = isAutheticated();
 const [datas, setDatas] = useState([]);
 const [editModal, setEditModal] = useState(false);
+const [loader, setLoader] = useState(false);
+const [update, setUpdate] = useState(false);
+const [create, setCreate] = useState(false);
 
 const [edits, setEdits] = useState({
     editId: "",
@@ -52,6 +55,7 @@ const onUpdatehandler = (event) => {
       });
     }
     else{
+      setUpdate(!update);
       setEdits({...edits, modal: !modal})
       toast.success('User Updated Successfully ', {
         style: {
@@ -197,14 +201,17 @@ const ucheckChange = tags => event => {
 }
 
 useEffect(() => {
+  setLoader(true)
   getUsers(user._id, token).then(data => {
   if (data.error) {
       console.log(data.error);
+      // setLoader(false)
   } else {
       setDatas(data);
+      setLoader(false)
   }
   });
-},[edits, deleteSuccess, adminSuccess, userCreate])
+},[create, deleteSuccess, adminSuccess, update])
 
 const onSubmit = event => {
   event.preventDefault();
@@ -230,6 +237,7 @@ const onSubmit = event => {
         });
         setUserCreate({ ...userCreate, uerror: data.error, usuccess: false });
       } else {
+        setCreate(!create)
         toast.success("User created successfully", {
           style: {
             border: '2px solid #ed4f4f',
@@ -345,18 +353,8 @@ const createUserModal = () => (
       </ModalFooter>
     </Modal>
 )
-
-
-return(
-        <Base title={datas ? "" : "User edit and epdate page"} description={datas ? "" : "You can Create, Update, Delete users from here"} >
-          <button onClick={createButtonHandle} className="addUser">+</button>
-        {editModalb()}
-        {createUserModal()}
-        <Toaster 
-            position="bottom-center"
-            reverseOrder={false}/>
-        {datas < 1 ?  <h1 className="text-white text-center fontLight pt-5 ">No users! .. Add users by clicking '+' button bellow</h1> :         
-        <div className="col-md-8 mx-auto mt-4">
+const tables = () => (
+  <div className="col-md-8 mx-auto mt-4">
             <table className="col-md-7 bg-white table text-center listTable">
                     <thead>
                         <tr>
@@ -383,7 +381,20 @@ return(
                         </tbody>
                     ))}
             </table>
-        </div>}
+        </div>
+)
+
+return(
+        <Base title={loader ? "" : "All Users"} description={loader ? "" : "Edit, Update, Delete users from here" }  >
+          <button onClick={createButtonHandle} className="addUser">+</button>
+        {editModalb()}
+        {createUserModal()}
+        <Toaster 
+            position="bottom-center"
+            reverseOrder={false}/>
+        {loader ? <h1 className="text-white text-center fontLight">Loading ...</h1> 
+          : datas < 1 ? <h1 className="text-white text-center fontLight pt-5 ">Oops! ...  there is no users so far ... !</h1>
+          : tables()}
         </Base>
     )
 
