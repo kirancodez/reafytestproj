@@ -50,7 +50,12 @@ const Dashboard = () => {
                 <Link to= { 
                     user.assignedPerm.includes("user-list") ? "/user/list"
                     : user.assignedPerm.includes("user-edit") ? "/user/edit"
-                    : "/user/edit" }
+                    : "" }
+                    className={
+                        user.assignedPerm.includes("user-list") ? ""
+                        : user.assignedPerm.includes("user-edit") ? ""
+                        : "avoid-clicks"    
+                     }
                   >
                     <Card.Body>
                         <h1>{usercounts}</h1>
