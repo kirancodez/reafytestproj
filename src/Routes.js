@@ -9,9 +9,10 @@ import UserEditRoutes from "./auth/helper/UserEditRoutes";
 import UserListRoutes from "./auth/helper/UserListRoutes";
 import UserList from "./user/UserList";
 import UserEdit from "./user/UsersEdit";
-import Dashboard from "./user/Dashboard";
-import DashboardRoutes from "./auth/helper/DashboardRoutes";
-import AdminListing from "./user/AdminList";
+import Attendence from "./user/Attendence";
+import Listing from "./user/Listing";
+import Detailpage from "./user/Detailpage";
+import Logs from "./user/Logs";
 
 
 const Routes = () => {
@@ -21,10 +22,12 @@ const Routes = () => {
         <Route path="/" exact component={Home} />
         <Route path="/signup" exact component={Signup} />
         <Route path="/signin" exact component={Signin} />
+        <Route path="/attendance" exact component={Attendence} />
         <UserListRoutes path="/user/list" exact component={UserList} />
         <UserEditRoutes path="/user/edit" exact component={UserEdit} />
-        <UserEditRoutes path="/user/dash" exact component={Dashboard} />
-        <DashboardRoutes path="/admin/list" exact component={AdminListing} />
+        <UserEditRoutes path="/attendance/listing" exact component={Listing} />
+        <UserEditRoutes path="/employee-attendance/:userid" exact component={Detailpage} />
+        <UserEditRoutes path="/logs" exact component={Logs} />
       </Switch>
     </BrowserRouter>
   );

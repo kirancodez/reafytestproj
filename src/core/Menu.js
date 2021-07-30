@@ -1,8 +1,6 @@
 import React, { Fragment, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { signout, isAutheticated } from "../auth/helper";
-import PermissionList from 'permission-list';
-
 
 const currentTab = (history, path) => {
   if (history.location.pathname === path) {
@@ -11,10 +9,7 @@ const currentTab = (history, path) => {
     return { color: "black" };
   }
 };
-
 const Menu = ({ history }) => {
-  
-  const Permission = isAutheticated().user ? new PermissionList(isAutheticated().user.assignedPerm ) : new PermissionList(["view"])
   return <div>
     <ul className="nav nav-tabs bg-light">
       <li className="nav-item">
@@ -22,10 +17,8 @@ const Menu = ({ history }) => {
           Home 
         </Link>
       </li>
-      {
-       Permission.checkAll(["view", "user-list"])  && 
-       (
-        <li className="nav-item">
+  
+        {/* <li className="nav-item">
         <Link
           style={currentTab(history, "/user/list")}
           className="nav-link"
@@ -34,44 +27,72 @@ const Menu = ({ history }) => {
           View Users
         </Link>
       </li>
-       )
-      }
-      {
-        Permission.checkAll(["view","user-edit"]) && (
+       */}
+        {
+          isAutheticated() && isAutheticated().user.role == "admin" &&
           <li className="nav-item">
-            <Link
-              style={currentTab(history, "/user/edit")}
-              className="nav-link"
-              to="/user/edit"
-            >
-              Edit Users 
-            </Link>
-          </li>
-        )
-      }
-      {
-        Permission.checkAll(["view","dashboard"]) && (
+          <Link
+            style={currentTab(history, "/user/edit")}
+            className="nav-link"
+            to="/user/edit"
+          >
+            Edit Users
+          </Link>
+        </li>
+        }
+        
+        {
+          isAutheticated()  &&
           <li className="nav-item">
+          <Link
+            style={currentTab(history, "/attendance")}
+            className="nav-link"
+            to="/attendance"
+          >
+            Attendance
+          </Link>
+        </li>
+        }
+
+        {
+          ( isAutheticated()?.user?.role == "admin" || isAutheticated()?.user?.role == "reporter" )  &&
+          <li className="nav-item">
+          <Link
+            style={currentTab(history, "/attendance/listing")}
+            className="nav-link"
+            to="/attendance/listing"
+          >
+            Listing
+          </Link>
+        </li>
+        }
+
+        {
+          ( isAutheticated()?.user?.role == "admin" || isAutheticated()?.user?.role == "reporter" )  &&
+          <li className="nav-item">
+          <Link
+            style={currentTab(history, "/logs")}
+            className="nav-link"
+            to="/logs"
+          >
+            Logs
+          </Link>
+        </li>
+        }
+            
+        
+          {/* <li className="nav-item">
           <Link
             style={currentTab(history, "/admin/dash")}
             className="nav-link"
             to="/user/dash">
             Dashboard
           </Link>
-        </li>
-        )
-      }
+        </li> */}
+        
+      
       {!isAutheticated() && (
         <Fragment>
-          <li className="nav-item">
-            <Link
-              style={currentTab(history, "/signup")}
-              className="nav-link"
-              to="/signup"
-            >
-              Signup
-            </Link>
-          </li>
           <li className="nav-item">
             <Link
               style={currentTab(history, "/signin")}

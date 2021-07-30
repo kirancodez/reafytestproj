@@ -62,15 +62,16 @@ export const isAutheticated = () => {
   }
 };
 
-export const createuser = (userId, token, user) => {
-  console.log(JSON.stringify(user));
+export const createuser = (user) => {
+  const { token } = isAutheticated();
   return new Promise((resolve, reject) => {
-    fetch(`${API}/createuser/${userId}`, {
+    fetch(`${API}/createuser`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        Authentication: token
       },
       body: JSON.stringify(user)
     })

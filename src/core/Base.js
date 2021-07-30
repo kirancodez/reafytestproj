@@ -14,7 +14,7 @@ const Base = ({
   return <div>
     <Menu />
     <div className="container-fluid ">
-      <div className="jumbotron text-white text-center fontLight mt-5">
+      <div className="jumbotron brand-colour text-center fontLight mt-5">
         <h2 className="display-5 fontLight">{title}</h2>
         <p className="lead">{description}</p>
       </div>

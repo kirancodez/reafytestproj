@@ -10,7 +10,8 @@
   box-shadow: 0 3px 3px rgba(151, 151, 151, 0.335);
 }
 body {
-  background-color: #ed4f4f;
+  background-color: #c1ccd8
+  ;
   font-family: 'Mulish', sans-serif;
 }
 footer {
@@ -34,14 +35,14 @@ footer {
   font-weight: 100;
 }
 .controlBtn{
-  background-color: #ed4f4f;
+  background-color: #1b4079;
   color: white;
   border-radius: 30px;
   margin: 0 10px;
 }
 .addUser{
     background-color: white;
-    color: #ed4f4f;
+    color: #1b4079;
     font-weight: 100;
     text-align:center;
     position: absolute;
@@ -58,7 +59,7 @@ footer {
   margin-top: 19px;
 }
 .crtlbtn{
-  background-color: #ed4f4f;
+  background-color: #1b4079;
   color: white;
   border-radius: 20px;
 }
@@ -75,7 +76,7 @@ footer {
 .card h1 {
   font-size: 70px;
   font-weight: 100;
-  color: #ed4f4f;
+  color: #1b4079;
 }
 .card p {
   font-weight: 400;
@@ -87,4 +88,145 @@ footer {
 }
 .avoid-clicks {
   pointer-events: none;
+}
+.brand-colour {
+  color: #1b4079;
+  font-weight: 200;
+}
+
+
+.btns{
+  width: 25vw;
+  height: 10vw;
+  transition: 0.3s;
+  margin: 10px;
+  border: 0;
+  border-radius: 31px;
+  font-weight: 100;
+  box-shadow: 0 2px 1px rgba(0,0,0,0.09), 
+  0 4px 2px rgba(0,0,0,0.09), 
+  0 8px 4px rgba(0,0,0,0.09), 
+  0 16px 8px rgba(0,0,0,0.09),
+  0 32px 16px rgba(0,0,0,0.09);
+  font-size: 26px;
+  
+}
+
+.btns:hover {
+  background-color: #1b4079;
+  color: white;
+}
+.attendence {
+  padding-top: 35vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%
+}
+.topleft {
+  position: absolute;
+  top: 15px;
+  left: 30px;
+  width: 40px;
+  color: #1b4079;
+  font-size: 25px;
+}
+.fadeout{
+  visibility: hidden;
+  opacity: 0;
+  transition: display 0s, opacity 0.5s linear;
+}
+.inmates{
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 1px rgba(0,0,0,0.09), 
+  0 4px 2px rgba(0,0,0,0.09), 
+  0 8px 4px rgba(0,0,0,0.09), 
+  0 16px 8px rgba(0,0,0,0.09),
+  0 32px 16px rgba(0,0,0,0.09);
+}
+.item{
+  list-style-type: none;
+  display: inline-block;
+  margin-left:4%;
+  margin-right:4%;
+  margin-top:4%;
+  margin-bottom:4%;
+}
+
+.circle {
+  color: white;
+  background-color: #3275dc;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  line-height: 60px;
+  font-size: 25px;
+  text-align: center;
+  cursor: pointer;
+  z-index: 999;
+  list-style: none;  
+}
+
+.notify-badge{
+  position: absolute;
+  margin-left: 4px;
+  margin-top: -23px;
+  height: 2.5rem;
+  width: 2.5rem;
+  text-align: center;
+  line-height: 0rem;
+  font-size: 1rem;
+  color: white;
+}
+
+.searchBox{
+  border-radius: 10px;
+  padding: 12px;
+}
+.countDiv{
+  padding-left: 50px;
+}
+.countDiv h1 {
+  font-weight: 900;
+  font-size: 50px;
+}
+.datepick input {
+  padding: 8px;
+  border: 2px solid #1b4079;
+  border-radius: 20px;
+  margin-bottom: 50px;
+}
+.details-wraper{
+  border-radius: 20px;
+  box-shadow: 0 2px 1px rgba(0,0,0,0.09), 
+  0 4px 2px rgba(0,0,0,0.09), 
+  0 8px 4px rgba(0,0,0,0.09), 
+  0 16px 8px rgba(0,0,0,0.09),
+  0 32px 16px rgba(0,0,0,0.09);
+}
+.nice-dates-day.-highlight { color: red; }
+
+.highlight {
+  color:orange !important;
+}
+.highlight1 {
+  color:green !important;
+}
+
+.attendanceBtns button.active{
+  background-color: green;
+}
+.edit-wraper{
+  margin-top: 50px;
+  border-radius: 20px;
+  box-shadow: 0 2px 1px rgba(0,0,0,0.09), 
+  0 4px 2px rgba(0,0,0,0.09), 
+  0 8px 4px rgba(0,0,0,0.09), 
+  0 16px 8px rgba(0,0,0,0.09),
+  0 32px 16px rgba(0,0,0,0.09);
+}
+.edit-wraper .react-calendar {
+  margin-left: 30px;
+  border: none;
 }

@@ -6,12 +6,12 @@ import PermissionList from 'permission-list';
 
 
 const UserListRoutes = ({ component: Component, ...rest }) => {
-const Permission = isAutheticated().user ? new PermissionList(isAutheticated().user.assignedPerm ) : new PermissionList(["view"])
+  const Permission = isAutheticated().user ? new PermissionList(isAutheticated().user.assignedPerm ) : new PermissionList(["view"])
   return (
     <Route
       {...rest}
       render={props =>
-        isAutheticated() && Permission.checkAll(["view","user-list"]) ? (
+        isAutheticated() &&  isAutheticated().user.role == "admin" || isAutheticated().user.role == "reporter" ? (
           <Component {...props} />
         ) : (
           <Redirect

@@ -11,7 +11,7 @@ const UserEditRoutes = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={props =>
-        isAutheticated() && Permission.checkAll(["view"]) ? (
+        isAutheticated() &&  isAutheticated().user.role == "admin" ? (
           <Component {...props} />
         ) : (
           <Redirect

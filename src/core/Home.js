@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <Base >
       <div className="row quote">
-        <h1 className=" text-white center">We are awesome, We did Awesome</h1>
+        <h1 className=" brand-colour center">We are awesome, We did Awesome</h1>
       </div>
     </Base>
   );

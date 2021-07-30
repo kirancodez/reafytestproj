@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Base from "../core/Base";
 import { createuser, isAutheticated } from "../auth/helper";
-import {getUsers, getUser, updateUser, deleteUser, makeAdmin} from "./helper/userapicalls"
+import {getUsers, getUser, updateUser, deleteUser, getDesignation, getReporters} from "./helper/userapicalls"
 import Modal from "react-bootstrap/Modal";
 import ModalBody from "react-bootstrap/ModalBody";
 import ModalFooter from "react-bootstrap/ModalFooter";
@@ -16,6 +16,32 @@ const [loader, setLoader] = useState(false);
 const [update, setUpdate] = useState(false);
 const [create, setCreate] = useState(false);
 
+// Load Deignations
+const [designations, setDesignations] = useState([]);
+const [reporters, setReporters] = useState([""]);
+
+
+useEffect(() => {
+  getDesignation().then( items => {
+    if(items.error){
+      console.log(items.error)
+    }
+    else{
+      setDesignations(items)
+    }
+  })
+  
+  getReporters().then( items => {
+    if(items.error){
+      console.log(items.error)
+    }
+    else{
+      setReporters(items)
+    }
+  })
+}, [])
+
+
 const [edits, setEdits] = useState({
     editId: "",
     name: "",
@@ -23,12 +49,14 @@ const [edits, setEdits] = useState({
     phoneNumber: "",
     age: "",
     modal: false,
-    permissions: [],
+    role: "",
+    reporter: "",
+    designation: "",
     sucess: false,
     error: "",
 })
 
-const { editId ,name, email, phoneNumber, age, modal, sucess, permissions, error} = edits;
+const { editId ,name, email, phoneNumber, age, modal,role, sucess, error, reporter, designation} = edits;
 const onEditHandler = (event) => {
   let id = event.currentTarget.getAttribute('data-id')
   setEdits({...edits, editId: id, modal: !modal });
@@ -39,9 +67,8 @@ const handleChange = name => event => {
 }
 
 const onUpdatehandler = (event) => {
-  updateUser(user._id, token, editId, {name, email, phoneNumber, age, assignedPerm:permissions}).then(data => {
+  updateUser(user._id, token, editId, {name, email, phoneNumber, age, role, reporter_id: reporter, designation}).then(data => {
     if(data.error){
-      console.log(data.error)
       toast.error(data.error, {
         style: {
           border: '2px solid #ed4f4f',
@@ -75,80 +102,27 @@ const onUpdatehandler = (event) => {
 useEffect(() => {
     getUser(user._id, token, editId ).then(data => {
         if(data.error){
-            console.log(data.error)
+          console.log(data.error)
         }
         else{
-            const { id, age, assignedPerm, email, isAdmin, name, phoneNumber  } = data;
-            setEdits({...edits, editId: data._id, name: name, email: email, phoneNumber: phoneNumber, permissions: assignedPerm, age: age })
-            setChecked(assignedPerm);
+          console.log(data)
+            const { id, age, assignedPerm, email, isAdmin, name, phoneNumber, role, designation  } = data;
+            setEdits({...edits, editId: data._id, name: name, email: email, phoneNumber: phoneNumber, age: age, role: role, reporter: data.reporter_id, designation: designation })
         }
     })
 },[editId])
-
-// checkbox
-const [checked, setChecked] = useState([]);
-const checkChange = tags => event => {
-  let selected = [...checked];
-  let find = selected.indexOf(tags)
-  if(find > -1){
-    selected.splice(find, 1)
-  }
-  else {
-    selected.push(tags)
-  }
-  setChecked(selected)
-  setEdits({...edits, permissions: selected})
-}
 
 // Delete User
 const [ deleteSuccess, setdeleteSuccess ] = useState(false);
 const deleteHandler = (event) => {
   let id = event.currentTarget.getAttribute('data-id')
-  deleteUser(user._id, token, id).then(data => {
+  deleteUser(id).then(data => {
     if(data.error){
       console.log(data.error)
     }
     else{
       setdeleteSuccess(!deleteSuccess);
       toast.success('User deleted Successfully', {
-        style: {
-          border: '2px solid #ed4f4f',
-          padding: '22px',
-          color: '#713200',
-        },
-        iconTheme: {
-          primary: '#ed4f4f',
-          secondary: '#FFFAEE',
-        },
-      });
-    }
-  })
-}
-
-// Make Admin
-const [ adminSuccess, amdinSuccess ] = useState(false);
-const adminHandler = (event) => {
-  let id = event.currentTarget.getAttribute('data-id')
-  makeAdmin(user._id, token, id).then(data => {
-    if(data.error){
-      console.log(data.error)
-    }
-    if(data.err === "ACCESS DENIDE"){
-      toast.error('Oops..! only admin can do this action', {
-        style: {
-          border: '2px solid #ed4f4f',
-          padding: '22px',
-          color: '#713200',
-        },
-        iconTheme: {
-          primary: '#ed4f4f',
-          secondary: '#FFFAEE',
-        },
-      });
-    }
-    else{
-      setdeleteSuccess(!adminSuccess);
-      toast.success('Succesfully made user as Admin', {
         style: {
           border: '2px solid #ed4f4f',
           padding: '22px',
@@ -170,13 +144,15 @@ const [userCreate, setUserCreate ] = useState({
   uemail: "",
   upassword: "",
   uphone: "",
-  upermission: "",
+  urole: "2",
+  ureporter: "1",
   uage: "",
+  udesignation: "1",
   usuccess: false,
   uerror: ""
 });
 
-const { umodal, uname, uemail, upassword, uphone, uage, upermission, usucces, uerror } = userCreate;
+const { umodal, uname, uemail, upassword, uphone, uage, urole, ureporter, usucces, uerror, udesignation } = userCreate;
 const createButtonHandle = (event) => {
   setUserCreate({...userCreate, umodal:!umodal});
 }
@@ -185,43 +161,32 @@ const handleCreateChange = name => event => {
   setUserCreate({ ...userCreate, error: false, [name]: event.target.value });
 };
 
-// user checkbox
-const [uchecked, setUchecked] = useState(["view"]);
-const ucheckChange = tags => event => {
-  let selected = [...uchecked];
-  let find = selected.indexOf(tags)
-  if(find > -1){
-    selected.splice(find, 1)
-  }
-  else {
-    selected.push(tags)
-  }
-  setUchecked(selected)
-  setUserCreate({...userCreate, upermission: selected})
-}
 
 useEffect(() => {
   setLoader(true)
   getUsers(user._id, token).then(data => {
   if (data.error) {
       console.log(data.error);
-      // setLoader(false)
   } else {
+    // console.log(data["data"])
       setDatas(data);
       setLoader(false)
   }
   });
-},[create, deleteSuccess, adminSuccess, update])
+},[create, deleteSuccess, update])
 
 const onSubmit = event => {
   event.preventDefault();
-  createuser(user._id, token, { 
+  createuser({ 
     name:uname, 
     email: uemail, 
     password: upassword, 
     phoneNumber: uphone, 
     age: uage, 
-    assignedPerm :upermission })
+    role : urole,
+    designation : udesignation,
+    reporter_id: ureporter
+  })
     .then(data => {
       if (data.error) {
         toast.error(data.error, {
@@ -256,7 +221,6 @@ const onSubmit = event => {
           uemail: "",
           upassword: "",
           uerror: "",
-          upermission: "",
           uage: "",
           usuccess: true
         });
@@ -265,6 +229,7 @@ const onSubmit = event => {
     .catch(err => console.log("Error in signup"));
 };
 
+// Update User Modal
 const editModalb = () => (
 <Modal show ={modal}>
       <ModalBody>
@@ -278,28 +243,50 @@ const editModalb = () => (
               <input type="number" className="form-control" onChange={handleChange("phoneNumber")} value={phoneNumber} />
               <label for="name">Age</label>
               <input type="number" className="form-control"  onChange={handleChange("age")} value={age} />
-              <p className="mt-2 mb-0">Access Permissions</p>
-              <label >
-                <input type="checkbox" className="m-2 mr-0" id="user-list"
-                onChange={checkChange("user-list")}
-                checked={checked.includes("user-list")}
+              <label for="team" className="form-control"> Designation 
+              <select className="form-control w-100" name="city" onChange={handleChange("designation")}>
+                    {
+                      designations?.data?.map((item, index) => { 
+                      return <option selected={designation === item._id} value={item._id} >{item.designation_type}</option>
+                      })
+                    }
+              </select>
+              </label>
+              <label for="team" className="form-control"> Team 
+              <select className="form-control w-100" name="city" onChange={handleChange("reporter")}>
+                {
+                  reporters?.data?.map((item, index) => { 
+                  return <option selected={reporter == item.user_id}  value={item.user_id} >{item.name}</option>
+                  })
+                }
+              </select>
+              </label>
+              <p className="mt-2 mb-0">Role</p>
+              <label>
+                <input className="m-2 mr-0" type="radio"  name="userrole"
+                onClick={handleChange("role")}
+                value="employee"
+                checked={role === "employee"}
                 ></input>
-                <span >User list</span>
+                <span>Employeee</span>
               </label>
               <label>
-                <input className="m-2 mr-0" type="checkbox" id="user-edit" 
-                onChange={checkChange("user-edit")}
-                checked={checked.includes("user-edit")}
+                <input className="m-2 mr-0" type="radio"  name="userrole"
+                onClick={handleChange("role")}
+                checked={role === "reporter"}
+                value="reporter"
                 ></input>
-                <span>User Edit</span>
+                <span>Reporter</span>
               </label>
               <label>
-                <input className="m-2 mr-0" type="checkbox" id="dashboard" 
-                onChange={checkChange("dashboard")}
-                checked={checked.includes("dashboard")}
+                <input className="m-2 mr-0" type="radio"   name="userrole"
+                onClick={handleChange("role")}
+                checked={role === "admin"}
+                value="admin"
                 ></input>
-                <span>Dashboard</span>
+                <span>Admin</span>
               </label>
+              {JSON.stringify(edits)}
           </form>
       </ModalBody>
       <ModalFooter>
@@ -309,6 +296,7 @@ const editModalb = () => (
     </Modal>
 )
 
+// Create User Modal 
 const createUserModal = () => (
 <Modal show ={umodal}>
       <ModalBody>
@@ -324,26 +312,47 @@ const createUserModal = () => (
               <input type="number" className="form-control" onChange={handleCreateChange("uphone")}  placeholder="Phone" />
               <label>Age</label>
               <input type="number" className="form-control" onChange={handleCreateChange("uage")}   placeholder="Age" />
+              <label for="team" className="form-control"> Designationss 
+              <select className="form-control w-100" name="city" onChange={handleCreateChange("udesignation")}>
+                    {
+                      designations?.data?.map((item, index) => { 
+                      return <option  value={item._id} >{item.designation_type}</option>
+                      })
+                    }
+              </select>
+              </label>
+              <label for="team" className="form-control"> Team 
+              <select className="form-control w-100" name="city" onChange={handleCreateChange("ureporter")}>
+                    {
+                      reporters?.data?.map((item, index) => { 
+                      return <option  value={item._id} >{item.name}</option>
+                      })
+                    }
+              </select>
+              </label>
+              
+              <label for="role"> Role<br/>
               <label>
-                <input className="m-2 mr-0" type="checkbox" id="Cuser-list"
-                onChange={ucheckChange("user-list")}
-                checked={uchecked.includes("user-list")}
+                <input className="m-2 mr-0" type="radio"    name="userrole"
+                onClick={handleCreateChange("urole")}
+                value="employee"
                 ></input>
-                <span>User list</span>
+                <span>Employeee</span>
               </label>
               <label>
-                <input className="m-2 mr-0" type="checkbox" id="Cuser-edit" 
-                onChange={ucheckChange("user-edit")}
-                checked={uchecked.includes("user-edit")}
+                <input className="m-2 mr-0" type="radio"    name="userrole"
+                onClick={handleCreateChange("urole")}
+                value="reporter"
                 ></input>
-                <span>User Edit</span>
+                <span>Reporter</span>
               </label>
               <label>
-                <input className="m-2 mr-0" type="checkbox" id="Cdashboard" 
-                onChange={ucheckChange("dashboard")}
-                checked={uchecked.includes("dashboard")}
+                <input className="m-2 mr-0" type="radio"    name="userrole"
+                onClick={handleCreateChange("urole")}
+                value="admin"
                 ></input>
-                <span>Dashboard</span>
+                <span>Admin</span>
+              </label>
               </label>
           </form>
       </ModalBody>
@@ -351,31 +360,39 @@ const createUserModal = () => (
           <button className="crtlbtn btn"  onClick={() => (setUserCreate({...userCreate, umodal: !umodal}))}>Close</button>
           <button className="crtlbtn btn" onClick={onSubmit}>Add</button>
       </ModalFooter>
+      {JSON.stringify(userCreate)}
     </Modal>
 )
+
 const tables = () => (
-  <div className="col-md-8 mx-auto mt-4">
-            <table className="col-md-7 bg-white table text-center listTable">
+  <div className="col-md-10 mx-auto mt-4">
+            <table className="col-md-12 bg-white table text-center listTable">
                     <thead>
                         <tr>
-                        <th scope="col">Name </th>
+                        <th scope="col">Name</th>
                         <th scope="col">Email</th>
                         <th scope="col">Phone</th>
                         <th scope="col">Age</th>
-                        <th scope="col"className={(user.assignedPerm.includes("user-edit") ? "" : "d-none")}>controls</th>
+                        <th scope="col">Designation</th>
+                        <th scope="col">Team</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Controls</th>
                         </tr>
                     </thead>
-                    {datas.map((item, index) => (
+                    
+                    {datas?.data?.map((item, index) => (
                       <tbody key={index}>
                             <tr>
                             <td>{item.name}</td>
                             <td>{item.email}</td>
                             <td>{item.phoneNumber}</td>
                             <td>{item.age}</td>
-                            <td  className={(user.assignedPerm.includes("user-edit") ? "" : "d-none")}>
+                            <td>{item.Designation}</td>
+                            <td>{item.Reporter}</td>
+                            <td>{item.role}</td>
+                            <td>
                                 <button  className="btn controlBtn" data-id={item._id} onClick={onEditHandler} > Edit</button>
                                 <button className="btn controlBtn" data-id={item._id}  onClick={deleteHandler}>Delete</button>
-                                <button className="btn controlBtn" data-id={item._id}  onClick={adminHandler} >Make Admin</button>
                             </td>
                             </tr>
                         </tbody>
