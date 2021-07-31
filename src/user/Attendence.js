@@ -70,9 +70,9 @@ const Attendence = () => {
         {
         loading ? <h1 className="font-weight-light text-white">Loading ..</h1> :
         attendance?.data?.checkIn && attendance?.data?.checkOut ? 
-        <h1>Hey {user.name}, you have updated attendence </h1> :
+        <h1> It will be rubbish here without you! <span className="brand-colour">{user.name}</span>, Will miss you  Hey {user.name}, you have updated attendence </h1> :
         attendance?.data?.leave ? 
-        <h1> It will be rubbish here without you! <span className="brand-colour">{user.name}</span>, Will miss you </h1> :
+        <h1> Hey {user.name}, you have updated attendence  </h1> :
         <div className="button">
             <button className="btns" onClick={clickHandler} btn-type={attendance?.data?.checkIn ? "Check Out" : "Check In"} >
                 { attendance?.data?.checkIn ? "Check Out" : "Check In" }
