@@ -23,9 +23,9 @@ const Routes = () => {
         <Route path="/signup" exact component={Signup} />
         <Route path="/signin" exact component={Signin} />
         <Route path="/attendance" exact component={Attendence} />
-        <UserListRoutes path="/user/list" exact component={UserList} />
+        <UserEditRoutes path="/user/list" exact component={UserList} />
         <UserEditRoutes path="/user/edit" exact component={UserEdit} />
-        <UserEditRoutes path="/attendance/listing" exact component={Listing} />
+        <UserListRoutes path="/attendance/listing" exact component={Listing} />
         <UserEditRoutes path="/employee-attendance/:userid" exact component={Detailpage} />
         <UserEditRoutes path="/logs" exact component={Logs} />
       </Switch>

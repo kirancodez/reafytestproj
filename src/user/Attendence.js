@@ -25,12 +25,14 @@ const Attendence = () => {
     
     // Attendance click handler
     const clickHandler = event => {
+        setLoading(true)
         let btnType = event.currentTarget.getAttribute('btn-type')
         if( btnType === "Check In"){
             ( async () => {
                 try {
                     const result = await checkIn(token, { checkIn: true });
                     setUpdate(!update)
+                    setLoading(false)
                 } catch( error ) {
                     console.log( error.error );
                 }
@@ -41,6 +43,7 @@ const Attendence = () => {
                 try {
                     const result = await checkOut(token, { checkOut: true });
                     setUpdate(!update)
+                    setLoading(false)
                 } catch( error ) {
                     console.log( error.error );
                 }
@@ -51,6 +54,7 @@ const Attendence = () => {
                 try {
                     const result = await leave(token, { leave: true });
                     setUpdate(!update)
+                    setLoading(false)
                 } catch( error ) {
                     console.log( error.error );
                 }
@@ -70,9 +74,9 @@ const Attendence = () => {
         {
         loading ? <h1 className="font-weight-light text-white">Loading ..</h1> :
         attendance?.data?.checkIn && attendance?.data?.checkOut ? 
-        <h1> It will be rubbish here without you! <span className="brand-colour">{user.name}</span>, Will miss you  Hey {user.name}, you have updated attendence </h1> :
+        <h1> Hey <span className="brand-colour">{user.name}</span>, you have updated attendence </h1> :
         attendance?.data?.leave ? 
-        <h1> Hey {user.name}, you have updated attendence  </h1> :
+        <h1>  It will be rubbish here without you! <span className="brand-colour">{user.name}</span>, Will miss you</h1> :
         <div className="button">
             <button className="btns" onClick={clickHandler} btn-type={attendance?.data?.checkIn ? "Check Out" : "Check In"} >
                 { attendance?.data?.checkIn ? "Check Out" : "Check In" }

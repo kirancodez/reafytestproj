@@ -6,7 +6,9 @@ import Modal from "react-bootstrap/Modal";
 import ModalBody from "react-bootstrap/ModalBody";
 import ModalFooter from "react-bootstrap/ModalFooter";
 import toast, { Toaster } from 'react-hot-toast';
-
+import { useLocation } from "react-router-dom";
+import PageItem from 'react-bootstrap/PageItem'
+import Pagination from 'react-bootstrap/Pagination'
 
 const UserEdit = () => {
 const { user, token } = isAutheticated();
@@ -20,6 +22,8 @@ const [create, setCreate] = useState(false);
 const [designations, setDesignations] = useState([]);
 const [reporters, setReporters] = useState([""]);
 
+const search = useLocation().search;
+const page=new URLSearchParams(search).get("page");
 
 useEffect(() => {
   getDesignation().then( items => {
@@ -164,7 +168,7 @@ const handleCreateChange = name => event => {
 
 useEffect(() => {
   setLoader(true)
-  getUsers(user._id, token).then(data => {
+  getUsers(user._id, token, page).then(data => {
   if (data.error) {
       console.log(data.error);
   } else {
@@ -229,6 +233,23 @@ const onSubmit = event => {
     .catch(err => console.log("Error in signup"));
 };
 
+
+let active = page;
+let items = [];
+
+for (let number = 1; number <= Math.ceil(datas.count/5) ; number++) {
+  items.push(
+    <Pagination.Item  onClick={()=> window.location.href='/user/edit?page=' + number} key={number} active={number === active}>
+      {number}
+    </Pagination.Item>,
+  );
+}
+
+const paginationBasic = (
+  <div>
+    <Pagination size="sm">{items}</Pagination>
+  </div>
+);
 // Update User Modal
 const editModalb = () => (
 <Modal show ={modal}>
@@ -256,8 +277,8 @@ const editModalb = () => (
               <select className="form-control w-100" name="city" onChange={handleChange("reporter")}>
                 {
                   reporters?.data?.map((item, index) => { 
-                  return <option selected={reporter == item.user_id}  value={item.user_id} >{item.name}</option>
-                  })
+                    return <option selected={ reporter === item._id }  value={item._id} >{item.name}</option>
+                    })
                 }
               </select>
               </label>
@@ -286,7 +307,6 @@ const editModalb = () => (
                 ></input>
                 <span>Admin</span>
               </label>
-              {JSON.stringify(edits)}
           </form>
       </ModalBody>
       <ModalFooter>
@@ -360,7 +380,6 @@ const createUserModal = () => (
           <button className="crtlbtn btn"  onClick={() => (setUserCreate({...userCreate, umodal: !umodal}))}>Close</button>
           <button className="crtlbtn btn" onClick={onSubmit}>Add</button>
       </ModalFooter>
-      {JSON.stringify(userCreate)}
     </Modal>
 )
 
@@ -398,6 +417,12 @@ const tables = () => (
                         </tbody>
                     ))}
             </table>
+            <h1>{
+            // Math.ceil(datas.count/5)
+ 
+            paginationBasic
+
+            }</h1>
         </div>
 )
 

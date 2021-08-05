@@ -68,7 +68,7 @@ const Menu = ({ history }) => {
         }
 
         {
-          ( isAutheticated()?.user?.role == "admin" || isAutheticated()?.user?.role == "reporter" )  &&
+          ( isAutheticated()?.user?.role == "admin"  )  &&
           <li className="nav-item">
           <Link
             style={currentTab(history, "/logs")}

@@ -8,8 +8,8 @@ const { token } = isAutheticated();
 axios.defaults.headers.common['Authentication'] = token;
 
 // Get the user list
-export const getUsers = (userId, token) => {
-    return fetch(`${API}/users`, {
+export const getUsers = (userId, token, page) => {
+    return fetch(`${API}/users?page=${page}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -21,7 +21,7 @@ export const getUsers = (userId, token) => {
       .then(response => {
         return response.json()
       })
-      .catch(error => console.log("ssss" + error));
+      .catch(error => console.log("error" + error));
   };
 
 export const getUser = (userId, token, selectedId) => {
@@ -257,20 +257,32 @@ export const editAttandanceCtrl = ( date, employeeId, status ) => {
     .catch(err => console.log(err))
 }
 
-export const fetchlogs = ( name, action, fromDate, toDate ) => {
+export const fetchlogs = ( name, action, fromDate, toDate, page ) => {
   const config = {
     header: {
       Accept: "application/json",
       "Content-type": "application/json"
       }
     }
-    return axios.post(`${API}/get-activity`, { 
+    return axios.post(`${API}/get-activity?page=${page}`, { 
       name: name || null,
       action: action || null,
       fromDate: fromDate || null,
       toDate: toDate || null
       
     }, config)
+    .then( res => {return res})
+    .catch(err => console.log(err))
+}
+
+export const getUserNames = ( ) => {
+  const config = {
+    header: {
+      Accept: "application/json",
+      "Content-type": "application/json"
+      }
+    }
+    return axios(`${API}/get-user-name`, {}, config)
     .then( res => {return res})
     .catch(err => console.log(err))
 }

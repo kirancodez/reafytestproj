@@ -25,7 +25,7 @@ const Detailpage = () => {
     const [Loading, setLoading]= useState(true);
     const [edit, setEdit] = useState(false);
     const [toFrom, setToFrom] = useState(new Date());
-    
+    const [change, setChange] = useState();
     const [value, setValue] = useState({
         name: "",
         fromDate: firstDay,
@@ -61,12 +61,13 @@ const Detailpage = () => {
                 console.log(error);
             }
         })()
-    }, [value.fromDate, value.toDate, edit])
+    }, [ change ,edit])
+
 
     const [ editAttendance, setEditAttandance ] = useState({
         date: today,
         employeeId: userid,
-        empstatus: status
+        empstatus: status || " "
     })
     const { date, employeeId, empstatus } = editAttendance;;
     
@@ -128,28 +129,18 @@ const Detailpage = () => {
        setEdit(true);
    }
 
-   const editCompleate = (event) => {
-    if(edit){
-        try {
-            const result =  editAttandanceCtrl(date, employeeId, empstatus);
-            setEditAttandance({...editAttendance, date: result.data.data.date, employeeId: result.data.data.employee_id, empstatus: result.data.data.status })   
-            toast.error('Successfully edited user', {
-                style: {
-                  border: '2px solid #ed4f4f',
-                  padding: '22px',
-                  color: '#713200',
-                },
-                iconTheme: {
-                  primary: '#ed4f4f',
-                  secondary: '#FFFAEE',
-                },
-              });
-        } catch(error){
-            console.log(error);
-        }
-    }
-    else{
-        toast.error('Please select Date and Attendance type before edit', {
+   const editCompleate = async (event) => {
+       if(edit){
+            try {
+                await editAttandanceCtrl(date, employeeId, empstatus);
+                await setChange(Math.random());
+                setLoading(true)
+            } catch(error){
+                console.log(error);
+            }
+       }
+       else {
+        toast.error("Please Select date and attandance before editing", {
             style: {
               border: '2px solid #ed4f4f',
               padding: '22px',
@@ -160,7 +151,7 @@ const Detailpage = () => {
               secondary: '#FFFAEE',
             },
           });
-    }
+       }
    }
 
     return(
@@ -219,12 +210,13 @@ const Detailpage = () => {
                                                 <div>
                                                     <h2 className="brand-colour" >From Date</h2>
                                                     {/* value={fromDate.split("/").reverse().join("-")} */}
-                                                    <input onChange={onFromDateChange} type="date"  max={toDate.split("/").reverse().join("-")} />
+                                                    <input onChange={onFromDateChange} type="date" max={toDate.split("/").reverse().join("-")}  />
                                                 </div>
                                                 <div>
                                                     <h2 className="brand-colour">To Date</h2>
-                                                    <input onChange={onToDateChange} type="date"  />
+                                                    <input onChange={onToDateChange} type="date"  max={toDate.split("/").reverse().join("-")} />
                                                 </div>
+                                                <button className="btn btn-success" onClick={() => ((setChange(Math.random())))} >Find</button>
                                             </div>
                                         </div>
                                     </div>
@@ -245,9 +237,9 @@ const Detailpage = () => {
                                 return 'highlight'; }
                             }}/>
                              <div className="btn-group ml-4" role="group" aria-label="Basic example" style={{marginLeft: "50px",marginTop: "30px"}}>
-                                <button style={{backgroundColor: "#1b4079", color: "white"}} type="button" className="btn " onClick={changeAttendance} value="full day" >Full Day</button>
-                                <button style={{backgroundColor: "#1b4079", color: "white"}} type="button" className="btn " onClick={changeAttendance}  value="half day">Half Day</button>
-                                <button style={{backgroundColor: "#1b4079", color: "white"}}  type="button" className="btn" onClick={changeAttendance} value="leave" >Absent</button>
+                                <button type="button" className={ editAttendance.empstatus === "full day" ? "activeatt" : "inactiveatt"} onClick={changeAttendance} value="full day" >Full Day</button>
+                                <button type="button" className={ editAttendance.empstatus === "half day" ? "activeatt" : "inactiveatt"} onClick={changeAttendance}  value="half day">Half Day</button>
+                                <button  type="button" className={ editAttendance.empstatus === "leave" ? "activeatt" : "inactiveatt"} onClick={changeAttendance} value="leave" >Absent</button>
                                 <button type="button" className="btn btn-success" onClick={editCompleate}>Edit</button>
                             </div> 
                     </div >

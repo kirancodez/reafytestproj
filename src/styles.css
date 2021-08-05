@@ -230,3 +230,20 @@ footer {
   margin-left: 30px;
   border: none;
 }
+.inactiveatt {
+  background-color:#1b4079;
+  color: white;
+  border: 0px;
+  border-radius: 3px;
+  margin: 0 5px;
+}
+.activeatt{
+  background-color: yellow;
+  color: black;
+  border: 0px;
+  border-radius: 3px;
+  margin: 0 5px;
+}
+.borderround {
+  border-radius :10px;
+}
