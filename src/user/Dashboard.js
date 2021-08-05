@@ -9,7 +9,7 @@
 
 // const Dashboard = () => {
 //     const { user, token } = isAutheticated();
-//     adminlist(user._id, token )
+//     adminlist(user._id, token ) 
     
 //     const [admincount, setAdmincount] = useState("")
 //     const [usercounts, setUsercounts] = useState("")

@@ -62,7 +62,7 @@ const Attendence = () => {
         }
     }
     
-    // Redirecting
+    // Redirecting 
     let history = useHistory();
     const redirect = () => {
        return history.push('/')

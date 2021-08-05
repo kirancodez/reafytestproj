@@ -18,7 +18,7 @@ const Listing = (props) => {
 
     useEffect(() => {
         ( async () => {
-            try {
+            try { 
                 const list = await fetchAttendance(name);
                 setEmplist(list);
                 setLoading(false);

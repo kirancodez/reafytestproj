@@ -42,7 +42,7 @@ const Logs = () => {
     // List Pagination
     let active = page;
     let items = [];
-    for (let number = 1; number <= Math.ceil(count/5); number++) {
+    for (let number = 1; number <= Math.ceil(count/20); number++) {
     items.push(
         <Pagination.Item onClick={()=> window.location.href='/logs?page=' + number} key={number} active={number === active}>
         {number}

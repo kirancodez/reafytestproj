@@ -8,7 +8,7 @@ const Base = ({
   children
 }) => {
   useEffect(() => {
-
+ 
   },[Menu])
 
   return <div>

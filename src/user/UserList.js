@@ -21,7 +21,7 @@ const UserList = () => {
           setLoader(false);
         }
       });
-    },[])
+    },[]) 
     
 
 

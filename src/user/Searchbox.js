@@ -73,5 +73,5 @@ const changehandler = _.debounce((event) => {
       <ListItems />
     </div>
   );
-};
+}; 
 export default SearchBox;

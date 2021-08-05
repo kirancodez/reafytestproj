@@ -13,7 +13,7 @@ const Signup = () => {
     age: "",
     error: "",
     success: false
-  });
+  }); 
 
   const { name, email, password, phoneNumber, age, error, success } = values;
 

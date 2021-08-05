@@ -237,7 +237,7 @@ const onSubmit = event => {
 let active = page;
 let items = [];
 
-for (let number = 1; number <= Math.ceil(datas.count/5) ; number++) {
+for (let number = 1; number <= Math.ceil(datas.count/10) ; number++) {
   items.push(
     <Pagination.Item  onClick={()=> window.location.href='/user/edit?page=' + number} key={number} active={number === active}>
       {number}

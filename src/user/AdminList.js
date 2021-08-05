@@ -19,7 +19,7 @@ const AdminListing = () => {
         } else {
           setDatas(data);
           setLoader(false);
-        }
+        } 
       });
     },[])
     const content = () => (

@@ -17,7 +17,7 @@ import Logs from "./user/Logs";
 
 const Routes = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter> 
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/signup" exact component={Signup} />
