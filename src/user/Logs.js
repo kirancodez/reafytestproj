@@ -85,14 +85,13 @@ const Logs = () => {
                         <label className="ml-3">To Date: <input className="ml-3" type="date" onChange={(e) => {setLog({...log, toDate: e.target.value})}} /></label>
                         <button className="btn btn-success ml-3" onClick={() => {setChanges(Math.random())}} >Submit</button>
                     </div>
-                    {console.log(loglist.length)}
-                    {loglist.length ? 
+                    {loglist?.length ? 
                            loglist?.map((items, index) => (
                             <div className="cards text-capitalize ">
                                 <p className="bg-white p-3 " key={index} >{items.sentence}</p>
                             </div>
                         )) : 
-                    <h3>No datas found</h3>
+                    <h3>Loading ...</h3>
                     }
                     {paginationBasic}
                 </div> 
