@@ -11,9 +11,10 @@ import { useLocation } from "react-router-dom"
 const Logs = () => {
     
     const search = useLocation().search;
-    const page= 3
+    const [page, setPage] = useState(1);
     const [users, setUsers] = useState([]);
     const [changes, setChanges] = useState();
+    const [loading, setLoading] = useState(true)
     const [log, setLog] = useState({
         name: "",
         action: "",
@@ -33,18 +34,29 @@ const Logs = () => {
                 await setLogList(details?.data?.data);
                 await setLog({...log, count: details.data.count})
                 setUsers(userNames?.data?.data)
+                setLoading(false)
             } catch(error) {
                 console.log(error);
             }
         })()
-    }, [changes])
+    }, [changes, page])
+
+    const onPageChanger = event => {
+        setPage(event.currentTarget.getAttribute('page-no'));
+        setLoading(true);
+    }
 
     // List Pagination
     let active = page;
     let items = [];
     for (let number = 1; number <= Math.ceil(count/20); number++) {
     items.push(
-        <Pagination.Item onClick={()=> window.location.href='/logs?page=' + number} key={number} active={number === active}>
+        <Pagination.Item 
+        onClick= {() => {
+            setPage(number);
+            setLoading(true);
+        }}
+        key={number} active={number === active}>
         {number}
         </Pagination.Item>,
     );
@@ -76,7 +88,7 @@ const Logs = () => {
 
     return(
         <Base>
-            {
+            {   loading ? <h1>Loading ... </h1> : 
                 <div className="container">
                     <div className="filters d-flex justify-content-around mb-5 mt-5 bg-light p-4 borderround">
                         {actions}
@@ -91,7 +103,7 @@ const Logs = () => {
                                 <p className="bg-white p-3 " key={index} >{items.sentence}</p>
                             </div>
                         )) : 
-                    <h3>Loading ...</h3>
+                    <h3>No data found</h3>
                     }
                     {paginationBasic}
                 </div> 
