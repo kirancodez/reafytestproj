@@ -69,7 +69,7 @@ const Logs = () => {
     
     // User Actions
     const actions = (
-        <DropdownButton id="dropdown-basic-button" title="Actions" onSelect={(e) => {setLog({...log, action: e})}}>
+        <DropdownButton id="dropdown-basic-button" title={ action || "Action" } onSelect={(e) => {setLog({...log, action: e})}}>
             <Dropdown.Item eventKey='POST' >POST</Dropdown.Item>
             <Dropdown.Item eventKey='UPDATE' >UPDATE</Dropdown.Item>
             <Dropdown.Item eventKey='DELETE' >DELETE</Dropdown.Item>
@@ -78,7 +78,7 @@ const Logs = () => {
     
     // User Names
     const names = (
-        <DropdownButton id="dropdown-basic-button" title="Name" onSelect={(e) => {setLog({...log, name: e})}}>
+        <DropdownButton id="dropdown-basic-button" title={ name || "Name" } onSelect={(e) => {setLog({...log, name: e})}}>
             {users.map((item, index) => (
                 <Dropdown.Item eventKey={item.name} key={index} >{item.name}</Dropdown.Item>
             ))}
@@ -95,7 +95,7 @@ const Logs = () => {
                         {names}
                         <label className="ml-3">From Date: <input className="ml-3" type="date" onChange={(e) => {setLog({...log, fromDate: e.target.value})}} /></label>
                         <label className="ml-3">To Date: <input className="ml-3" type="date" onChange={(e) => {setLog({...log, toDate: e.target.value})}} /></label>
-                        <button className="btn btn-success ml-3" onClick={() => {setChanges(Math.random())}} >Submit</button>
+                        <button className="btn btn-success ml-3" onClick={() => {setChanges(Math.random())}} >Filter</button>
                     </div>
                     {loglist?.length ? 
                            loglist?.map((items, index) => (

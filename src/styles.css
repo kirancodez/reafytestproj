@@ -247,3 +247,6 @@ footer {
 .borderround {
   border-radius :10px;
 } 
+.avoid-clicks {
+  pointer-events: none;
+}

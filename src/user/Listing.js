@@ -37,7 +37,7 @@ const Listing = (props) => {
                         {user.role === "admin" ? <SearchBox name={name} setName={setName} /> : ""}
                         <div className="col-md-8 inmates mx-auto mt-4 ">
                             {loading ? <h1 className="brand-colour">Loading ... </h1> :
-                            <ul>
+                            <ul className={user.role === "admin" ? "" : "avoid-clicks"}>
                                 {empList?.data?.data.map((item, index) => (
                                     <Link to={`/employee-attendance/${item.employee_id}`} className="item" style={{textDecoration: "none"}}>
                                         {
