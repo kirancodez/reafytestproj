@@ -225,7 +225,7 @@ const Detailpage = () => {
                             }
                     </div>
                 </div>
-            </div>
+            </div> 
             { 
             Loading ? <h1> </h1> :
             <div className="container bg-white  edit-wraper mb-5">

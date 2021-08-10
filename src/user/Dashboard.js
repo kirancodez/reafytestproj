@@ -7,7 +7,7 @@
 // import { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 
-// const Dashboard = () => {
+// const Dashboard = () => { 
 //     const { user, token } = isAutheticated();
 //     adminlist(user._id, token ) 
     

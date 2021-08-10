@@ -10,7 +10,7 @@ const AdminListing = () => {
   const [datas, setDatas] = useState([]);
   const [loader, setLoader] = useState(false);
   
-  useEffect(() => {
+  useEffect(() => { 
     setLoader(true);
     adminlist(user._id, token).then(data => {
         if (data.error) {

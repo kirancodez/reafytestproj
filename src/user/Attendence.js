@@ -6,7 +6,7 @@ import { getAttendence, checkIn, checkOut, leave } from "./helper/userapicalls";
 const { user, token } = isAutheticated();
 
 
-const Attendence = () => {
+const Attendence = () => { 
     
     const [loading, setLoading] = useState(true);
 

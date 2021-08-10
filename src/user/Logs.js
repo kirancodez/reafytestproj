@@ -46,7 +46,7 @@ const Logs = () => {
         setLoading(true);
     }
 
-    // List Pagination
+    // List Pagination 
     let active = page;
     let items = [];
     for (let number = 1; number <= Math.ceil(count/20); number++) {
@@ -54,7 +54,7 @@ const Logs = () => {
         <Pagination.Item 
         onClick= {() => {
             setPage(number);
-            setLoading(true);
+            setLoading(true); 
         }}
         key={number} active={number === active}>
         {number}

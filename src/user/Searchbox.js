@@ -63,7 +63,7 @@ const changehandler = _.debounce((event) => {
   return (
     <div className="col-md-8  mx-auto mt-5 ">
       <input
-        type="text"
+        type="text" 
         className="form-control searchBox"
         placeholder="Search Employee ..."
         onChange={changehandler}

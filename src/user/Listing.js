@@ -28,7 +28,7 @@ const Listing = (props) => {
         })()
     }, [name])
     
-    return(
+    return( 
         <Base>
             <div className="container">
                 <div className="row">

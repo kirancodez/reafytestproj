@@ -242,7 +242,7 @@ for (let number = 1; number <= Math.ceil(datas.count/10) ; number++) {
   items.push(
     <Pagination.Item       
     onClick= {() => {
-      setPage(number);
+      setPage(number);  
       setLoader(true);
     }} 
     key={number} active={number === active}>

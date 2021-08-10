@@ -10,7 +10,7 @@ import UserListRoutes from "./auth/helper/UserListRoutes";
 import UserList from "./user/UserList";
 import UserEdit from "./user/UsersEdit";
 import Attendence from "./user/Attendence";
-import Listing from "./user/Listing";
+import Listing from "./user/Listing"; 
 import Detailpage from "./user/Detailpage";
 import Logs from "./user/Logs";
 
