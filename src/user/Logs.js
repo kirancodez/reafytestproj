@@ -11,7 +11,7 @@ import { useLocation } from "react-router-dom"
 const Logs = () => {
     
     const search = useLocation().search;
-    const page= new URLSearchParams(search).get("page");
+    const page= 3
     const [users, setUsers] = useState([]);
     const [changes, setChanges] = useState();
     const [log, setLog] = useState({
