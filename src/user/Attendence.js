@@ -76,7 +76,7 @@ const Attendence = () => {
         attendance?.data?.checkIn && attendance?.data?.checkOut ? 
         <h1> Hey <span className="brand-colour">{user.name}</span>, you have updated attendence </h1> :
         attendance?.data?.leave ? 
-        <h1>  It will be rubbish here without you! <span className="brand-colour">{user.name}</span>, Will miss you</h1> :
+        <h1>  <span className="brand-colour">{user.name}</span> .. Your leave marked successfully</h1> :
         <div className="button">
             <button className="btns" onClick={clickHandler} btn-type={attendance?.data?.checkIn ? "Check Out" : "Check In"} >
                 { attendance?.data?.checkIn ? "Check Out" : "Check In" }

@@ -17,13 +17,14 @@ const [editModal, setEditModal] = useState(false);
 const [loader, setLoader] = useState(false);
 const [update, setUpdate] = useState(false);
 const [create, setCreate] = useState(false);
+const [page, setPage] = useState(1);
 
 // Load Deignations
 const [designations, setDesignations] = useState([]);
 const [reporters, setReporters] = useState([""]);
 
 const search = useLocation().search;
-const page=new URLSearchParams(search).get("page");
+// const page=new URLSearchParams(search).get("page");
 
 useEffect(() => {
   getDesignation().then( items => {
@@ -114,7 +115,7 @@ useEffect(() => {
             setEdits({...edits, editId: data._id, name: name, email: email, phoneNumber: phoneNumber, age: age, role: role, reporter: data.reporter_id, designation: designation })
         }
     })
-},[editId])
+},[editId, page])
 
 // Delete User
 const [ deleteSuccess, setdeleteSuccess ] = useState(false);
@@ -177,7 +178,7 @@ useEffect(() => {
       setLoader(false)
   }
   });
-},[create, deleteSuccess, update])
+},[create, deleteSuccess, update, page])
 
 const onSubmit = event => {
   event.preventDefault();
@@ -239,8 +240,13 @@ let items = [];
 
 for (let number = 1; number <= Math.ceil(datas.count/10) ; number++) {
   items.push(
-    <Pagination.Item  onClick={()=> window.location.href='/user/edit?page=' + number} key={number} active={number === active}>
-      {number}
+    <Pagination.Item       
+    onClick= {() => {
+      setPage(number);
+      setLoader(true);
+    }} 
+    key={number} active={number === active}>
+    {number}
     </Pagination.Item>,
   );
 }
@@ -250,6 +256,7 @@ const paginationBasic = (
     <Pagination size="sm">{items}</Pagination>
   </div>
 );
+
 // Update User Modal
 const editModalb = () => (
 <Modal show ={modal}>

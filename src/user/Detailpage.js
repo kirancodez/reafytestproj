@@ -58,6 +58,7 @@ const Detailpage = () => {
                 setAbsents(details)
                 setLoading(false);
             } catch(error) {
+                setLoading(false);
                 console.log(error);
             }
         })()
@@ -155,16 +156,18 @@ const Detailpage = () => {
    }
 
     return(
+        
         <div>
-             <Toaster 
+            <Toaster 
             position="bottom-center"
             reverseOrder={false}/>
             <a onClick={redirect} className="topleft"><HiArrowLeft/></a>
             <div className="container mt-5 pt-5">
                 <div className="row">
                     <div className="col-md-12 row">
-                            {
+                            {   
                                 Loading ? <h1 className="text-center">Loading ... </h1> :
+                                !name ? <h1 className="text-secondary text-center">No Attendance Data found</h1> :
                                 <div className="container">
                                     <h1 className="text-capitalize brand-colour text-center" style={{fontSize: "80px"}}>{ name+ "'s Attendance" }</h1>
                                     <h4 className="text-capitalize text-center text-secondary">Check In : <span style={{color: "#1a4280e3"}}>{ checkIn || "-"}</span>  |  Check Out : <span style={{color: "#1a4280e3"}} >{checkOut || "-" }</span>  |  Status : <span style={{color: "#1a4280e3"}}>{ status + " Present" }</span></h4>
@@ -197,7 +200,6 @@ const Detailpage = () => {
                                                 }}
                                                 />
                                             </div>
-                                            {/* {display : "flex", justifyContent: "center",  alignItems: "center"} */}
                                             <div className="col-md-4 countDiv" >
                                                 <h3 className="brand-colour">Total Days: </h3>
                                                 <h1>{totalDays}</h1>
@@ -209,7 +211,6 @@ const Detailpage = () => {
                                             <div className="col-md-4 datepick">
                                                 <div>
                                                     <h2 className="brand-colour" >From Date</h2>
-                                                    {/* value={fromDate.split("/").reverse().join("-")} */}
                                                     <input onChange={onFromDateChange} type="date" max={toDate.split("/").reverse().join("-")}  />
                                                 </div>
                                                 <div>
@@ -249,8 +250,8 @@ const Detailpage = () => {
                         </h1>
                     </div>
                 </div>
-            </div> 
-}</div>
+            </div> }
+    </div>
     )
 }
 

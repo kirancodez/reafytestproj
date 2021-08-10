@@ -34,7 +34,7 @@ const Listing = (props) => {
                 <div className="row">
                     <div className="text-center">
                         <h1 className="text-center brand-colour">Todays Attendance Details</h1>
-                        <SearchBox name={name} setName={setName} />
+                        {user.role === "admin" ? <SearchBox name={name} setName={setName} /> : ""}
                         <div className="col-md-8 inmates mx-auto mt-4 ">
                             {loading ? <h1 className="brand-colour">Loading ... </h1> :
                             <ul>
